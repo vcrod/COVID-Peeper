@@ -1,0 +1,25 @@
+.marginBottom25 {
+    margin-bottom: 2.5%;
+}
+
+.marginBottom10 {
+    margin-bottom: 10%;
+}
+
+.padding15px {
+    padding: 15px;
+}
+
+#map {
+    height: 100%;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#userInput {
+    text-decoration: underline;
+}
+

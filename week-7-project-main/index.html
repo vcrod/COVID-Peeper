@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COVID Peeper</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="assets\css\style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuQ0idwqB4eM4Yk8_1oQuPUqwxKXgZ22k&callback=initMap&libraries=&v=weekly"
+        defer></script>
+    <link
+        href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAACPCkYABQACAPn68AAFAwAA9/WtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM0RAQEBAQEAzNEREREREREMzREBAQEBARDM0REREREREQzNEQEBAQEREMzRERERERERDMzMzM0BEREMyIiIjNEREQyIhEiI0RERDIiIiIjREREMiIiIiNEREQyISISI0RERDIjIhIjREREMyIiIjNERERDMzMzNEREREREREREQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        rel="icon" type="image/x-icon" />
+</head>
+
+<body>
+
+    <section class="hero hero is-dark is-bold">
+        <div class="hero-body">
+            <div class="container pt-0 ">
+                <h1 class="title has-text-weight-bold">
+                    COVID-19 Cases Worldwide
+                </h1>
+                <h2 class="subtitle has-text-weight-semibold is-size-4">
+                    Have you ever wondered how poorly your country handled the COVID-19 pandemic compared other
+                    countries?
+                    <br> Search a country in the search bar for the latest COVID related stats.
+                </h2>
+                <div class="select marginBottom25">
+                    <select id="search">
+                        <option id="country"></option>
+                    </select>
+                </div>
+                <div class="select marginBottom25">
+                    <select id="search-history">
+                    </select>
+                </div>
+            </div>
+            <nav class="level p-2">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">New Cases</p>
+                        <p class="title" id="newCases">3,456</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Total Cases</p>
+                        <p class="title" id="totalCases">123</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">New Deaths</p>
+                        <p class="title" id="newDeaths">456K</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Total Deaths</p>
+                        <p class="title" id="totalDeaths">789</p>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container p-4">
+        <div class="tile is-ancestor">
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-8">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-dark">
+                            <p class="title has-text-centered padding15px">COVID Stats by Country</p>
+                            <!-- Display country selected -->
+                            <p class="subtitle has-text-centered" id="userInput">*Select a country in the drop down
+                                menu.*
+                            </p>
+                            <div class="content">
+                                <!-- Content -->
+                                <div class="columns">
+                                    <!-- "Cases" column -->
+                                    <div class="column has-text-centered">
+                                        <div class="marginBottom10">
+                                            <p class="heading">New Cases</p>
+                                            <p class="title" id="newCasesByCountry">0</p>
+                                        </div>
+                                        <div>
+                                            <p class="heading">Total Cases</p>
+                                            <p class="title" id="totalConfirmedByCountry">0</p>
+                                        </div>
+                                    </div>
+                                    <!-- "Recovered" column -->
+                                    <div class="column has-text-centered">
+                                        <div class="marginBottom10">
+                                            <p class="heading">New Recovered</p>
+                                            <p class="title" id="newRecoveredByCountry">0</p>
+                                        </div>
+                                        <div>
+                                            <p class="heading">Total Recovered</p>
+                                            <p class="title" id="totalRecoveredByCountry">0</p>
+                                        </div>
+                                    </div>
+                                    <!-- "Deaths" column -->
+                                    <div class="column has-text-centered">
+                                        <div class="marginBottom10">
+                                            <p class="heading">New Deaths</p>
+                                            <p class="title" id="newDeathsByCountry">0</p>
+                                        </div>
+                                        <div>
+                                            <p class="heading">Total Deaths</p>
+                                            <p class="title" id="totalDeathsByCountry">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </article>
+                    </div>
+                    <div class="tile">
+
+                        <div class="tile is-parent">
+
+                            <div id="map" class="tile is-child image is-4by3 notification is-dark">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child notification is-dark">
+                        <div class="content">
+                            <p class="title">COVID-19 Facts</p>
+                            <p class="subtitle">Nine quick facts about COVID-19:</p>
+                            <div class="content">
+                                <!-- Content -->
+                                <ol>
+                                    <li>
+                                        COVID-19 aka Coronavirus, is an illness caused by a virus that spreads easily
+                                        from person to person.
+                                    </li>
+                                    <li>COVID-19 is a <strong>GLOBAL</strong> pandemic.</li>
+                                    <li>People of all age groups can become infected.</li>
+                                    <li>Symptoms can range from mild or no symptoms to severe illness
+                                        or death.</li>
+                                    <li>You can become infected from respiratory droplets when an infected person
+                                        coughs, sneezes, or by simply having a conversation about how poorly your
+                                        country has handled the pandemic!</li>
+                                    <li>People with absolutely no symptoms can spread the virus.</li>
+                                    <li>Touching anything with the virus on it and then touching your eyes, nose, or
+                                        mouth can infect you.</li>
+                                    <li>The virus can live on surfaces for days.</li>
+                                    <li>Simple actions like properly wearing a face mask and hand washing can help stop
+                                        the spread of COVID-19.</li>
+                                </ol>
+                                <p class="subtitle">Important Links</p>
+                                <ol>
+                                    <li>
+                                        <a
+                                            href="https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/index.html">COVIDView:
+                                            A weekly surveillance summary (US)</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.osha.gov/SLTC/covid-19/">More resources from the US
+                                            Department of Labor</a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019">More
+                                            information about the pandemic from the World Health Organization</a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+
+</html>
